@@ -522,7 +522,7 @@ namespace RecyclePlus
 
         private void Update()
         {
-            if (ZInput.GetButtonDown("JoyButtonA") && handler.IsActive())
+            if (ZInput.GetButtonDown("JoyButtonA") && handler.IsActive)
             {
                 RecyclePlusMain.TrashItem();
                 // Switch back to inventory iab
