@@ -65,8 +65,8 @@
     <Reference Include="assembly_valheim, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>$(GamePath)\valheim_Data\Managed\publicized_assemblies\assembly_valheim_publicized.dll</HintPath>
     </Reference>
-    <Reference Include="BepInEx, Version=5.4.19.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>$(GamePath)\BepInEx\core\BepInEx.dll</HintPath>
+    <Reference Include="BepInEx">
+      <HintPath>E:\Steam\steamapps\common\Valheim\BepInEx\core\BepInEx.dll</HintPath>
     </Reference>
     <Reference Include="ServerSync, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>Libs\ServerSync.dll</HintPath>
@@ -103,6 +103,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>E:\Steam\steamapps\common\Valheim\unstripped_corlib\UnityEngine.PhysicsModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.TextCoreModule">
+      <HintPath>E:\Steam\steamapps\common\Valheim\unstripped_corlib\UnityEngine.TextCoreModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>$(GamePath)\unstripped_corlib\UnityEngine.UI.dll</HintPath>
     </Reference>
@@ -116,7 +119,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\ConfigurationManagerAttributes.cs" />
     <Compile Include="UnityWav\WavUtility.cs" />
-    <Compile Include="VersionHandshake.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
@@ -124,7 +126,6 @@
     <Content Include="Libs\ServerSync.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="LICENSE.txt" />
     <Content Include="README.md" />
     <EmbeddedResource Include="Resources\trash.png" />
     <EmbeddedResource Include="Resources\trash1.png" />

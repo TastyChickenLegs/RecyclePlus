@@ -20,7 +20,7 @@ namespace RecyclePlus
     {
         private static readonly bool isDebug = false;
         internal const string ModName = "RecyclePlus";
-        internal const string ModVersion = "1.2.0";
+        internal const string ModVersion = "1.2.2";
         internal const string Author = "TastyChickenLegs";
         private const string ModGUID = Author + "." + ModName;
         private static string ConfigFileName = ModGUID + ".cfg";
@@ -33,7 +33,7 @@ namespace RecyclePlus
         /// <summary>
         /// Custom Entered Variables
         /// </summary>
-        public static ConfigEntry<KeyboardShortcut> modKey;
+        public static ConfigEntry<KeyCode> modKey;
         public static ConfigEntry<bool> modEnabled;
         public static ConfigEntry<float> returnResources;
         public static ConfigEntry<bool> ConfirmDialog;
@@ -111,8 +111,8 @@ namespace RecyclePlus
             returnResources = config("General", "ReturnResources", 1f, new ConfigDescription
                 ("Fraction of resources to return (0.0 - 1.0) 1.0 is 100%", new AcceptableValueRange<float>(0.0f, 1.0f)));
             showcan = config("General", "ShowTrashCan", true, new ConfigDescription("Show Trash Can on the inventory menu Requires Restart"));
-            modKey = config("General", "DiscardHotkey", new KeyboardShortcut(KeyCode.Delete),
-                new ConfigDescription("The modifier key to recycle or delete on click", new AcceptableShortcuts()));
+            modKey = config("General", "DiscardHotkey", KeyCode.Delete,
+                new ConfigDescription("The modifier key to recycle or delete on click"));
             TrashColor = config("General", "TrashColor", new Color(1f, 0.8482759f, 0), "Color for the trash label");
             TrashLabel.SettingChanged += (sender, args) => { if (trashButton != null) { trashButton.SetText(TrashLabel.Value); } };
 
@@ -208,7 +208,7 @@ namespace RecyclePlus
             public override bool IsValid(object value) => true;
 
             public override string ToDescriptionString() =>
-                "# Acceptable values: " + string.Join(", ", KeyboardShortcut.AllKeyCodes);
+                "# Acceptable values: " + string.Join(", ", UnityInput.Current.SupportedKeyCodes);
         }
 
         #endregion
@@ -379,7 +379,7 @@ namespace RecyclePlus
         [HarmonyPatch(typeof(InventoryGui), "UpdateItemDrag")]
         public static void UpdateItemDrag_Postfix(InventoryGui __instance, ref GameObject ___m_dragGo, ItemDrop.ItemData ___m_dragItem, Inventory ___m_dragInventory, int ___m_dragAmount)
         {
-            if (modKey.Value.IsDown())
+            if (Input.GetKeyDown(modKey.Value))
             {
                 _clickedTrash = true;
             }
@@ -522,7 +522,7 @@ namespace RecyclePlus
 
         private void Update()
         {
-            if (ZInput.GetButtonDown("JoyButtonA") && handler.IsActive())
+            if (ZInput.GetButtonDown("JoyButtonA") && handler.IsActive)
             {
                 RecyclePlusMain.TrashItem();
                 // Switch back to inventory iab
