@@ -20,7 +20,7 @@ namespace RecyclePlus
     {
         private static readonly bool isDebug = false;
         internal const string ModName = "RecyclePlus";
-        internal const string ModVersion = "1.2.2";
+        internal const string ModVersion = "1.2.6";
         internal const string Author = "TastyChickenLegs";
         private const string ModGUID = Author + "." + ModName;
         private static string ConfigFileName = ModGUID + ".cfg";
@@ -54,11 +54,11 @@ namespace RecyclePlus
         public static Transform trash;
         public static AudioSource audio;
         public static TrashButton trashButton;
-        public static bool configVerifyClient => _configVerifyClient.Value;
+    
         public static ManualLogSource MyLogger;
         public static RecyclePlusMain context;
         public static ConfigEntry<bool> showcan;
-        public static ConfigEntry<bool> _configVerifyClient;
+     
         /// <summary>
         /// End Custom Variables
         /// </summary>
@@ -107,7 +107,7 @@ namespace RecyclePlus
             _ = ConfigSync.AddLockingConfigEntry(_serverConfigLocked);
             /// Custom Configs ///
             TrashLabel = config("General", "TrashLabel", "Trash", "Label for the trash button");
-            _configVerifyClient = config("", "Verify Client", false, "Verify the client for connected servers.");
+           
             returnResources = config("General", "ReturnResources", 1f, new ConfigDescription
                 ("Fraction of resources to return (0.0 - 1.0) 1.0 is 100%", new AcceptableValueRange<float>(0.0f, 1.0f)));
             showcan = config("General", "ShowTrashCan", true, new ConfigDescription("Show Trash Can on the inventory menu Requires Restart"));
@@ -387,7 +387,7 @@ namespace RecyclePlus
             if (_clickedTrash && ___m_dragItem != null && ___m_dragInventory.ContainsItem(___m_dragItem))
             {
                 Dbgl($"Recycling {___m_dragAmount}/{___m_dragItem.m_stack} {___m_dragItem.m_dropPrefab.name}");
-
+                
                 bool returnedGoods = false;
 
                 if (returnResources.Value > 0)
@@ -395,8 +395,8 @@ namespace RecyclePlus
                     Recipe recipe = ObjectDB.instance.GetRecipe(___m_dragItem);
 
                     if (recipe != null)
-                        //Dbgl($"Recipe stack: {recipe.m_amount} num of stacks: {___m_dragAmount / recipe.m_amount}");
-
+                    //Dbgl($"Recipe stack: {recipe.m_amount} num of stacks: {___m_dragAmount / recipe.m_amount}");
+                    {
                         if (recipe != null && ___m_dragAmount / recipe.m_amount > 0)
                         {
                             //items are gettng returned set up the message back to player for Recycled//
@@ -439,6 +439,7 @@ namespace RecyclePlus
 
                             //show a message to the player that the item is deleted//
                         }
+                    }
                 }
 
                 if (___m_dragAmount == ___m_dragItem.m_stack)

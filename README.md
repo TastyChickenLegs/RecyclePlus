@@ -33,6 +33,24 @@ Options
 
 Versions
 
+1.2.6
+
+- updated for Valheim 0.271.22
+
+
+1.2.5
+
+Updated to work with Hildir's Request
+
+1.2.4
+
+skipped for testing
+
+1.2.3
+
+updated to newest valheim version 0.214.300
+
+
 1.2.2
 
 updated to newest Valheim version 0.214.2
