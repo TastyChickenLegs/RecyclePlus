@@ -12,6 +12,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using System.Collections;
+using TMPro;
 
 namespace RecyclePlus
 {
@@ -20,7 +21,7 @@ namespace RecyclePlus
     {
         private static readonly bool isDebug = false;
         internal const string ModName = "RecyclePlus";
-        internal const string ModVersion = "1.2.6";
+        internal const string ModVersion = "1.2.7";
         internal const string Author = "TastyChickenLegs";
         private const string ModGUID = Author + "." + ModName;
         private static string ConfigFileName = ModGUID + ".cfg";
@@ -353,7 +354,7 @@ namespace RecyclePlus
                     LogErr("ac_text not found!");
                     return;
                 }
-                tText.GetComponent<Text>().text = text;
+                tText.GetComponent<TMP_Text>().text = text;
             }
 
             public void SetColor(Color color)
@@ -364,7 +365,7 @@ namespace RecyclePlus
                     LogErr("ac_text not found!");
                     return;
                 }
-                tText.GetComponent<Text>().color = color;
+                tText.GetComponent<TMP_Text>().color = color;
             }
         }
 

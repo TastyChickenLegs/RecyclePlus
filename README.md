@@ -33,6 +33,12 @@ Options
 
 Versions
 
+1.2.7
+
+- Corrected the Broken Trash can icon and Trash can label
+
+
+
 1.2.6
 
 - updated for Valheim 0.271.22
