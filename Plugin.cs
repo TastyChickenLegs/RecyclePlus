@@ -13,6 +13,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using System.Collections;
 using TMPro;
+using System.Runtime.Remoting.Messaging;
 
 namespace RecyclePlus
 {
@@ -21,7 +22,7 @@ namespace RecyclePlus
     {
         private static readonly bool isDebug = false;
         internal const string ModName = "RecyclePlus";
-        internal const string ModVersion = "1.2.7";
+        internal const string ModVersion = "1.3.0";
         internal const string Author = "TastyChickenLegs";
         private const string ModGUID = Author + "." + ModName;
         private static string ConfigFileName = ModGUID + ".cfg";
@@ -50,6 +51,7 @@ namespace RecyclePlus
         public static InventoryGui _gui;
         public static Sprite trashSprite;
         public static Sprite bgSprite;
+        public static Sprite gborder;
         public static GameObject dialog;
         public static AudioClip[] sounds = new AudioClip[3];
         public static Transform trash;
@@ -118,7 +120,8 @@ namespace RecyclePlus
             TrashLabel.SettingChanged += (sender, args) => { if (trashButton != null) { trashButton.SetText(TrashLabel.Value); } };
 
             TastyLogger.LogInfo(nameof(RecyclePlusMain) + " Loaded!");
-
+            
+            //gborder = LoadSprite("RecyclePlus.Resources.border.png", new Rect(0, 0, 1024, 1024), new Vector2(48, 56)); 
             trashSprite = LoadSprite("RecyclePlus.Resources.trash.png", new Rect(0, 0, 64, 64), new Vector2(32, 32));
             bgSprite = LoadSprite("RecyclePlus.Resources.trashmask.png", new Rect(0, 0, 96, 112), new Vector2(48, 56));
 
@@ -257,7 +260,13 @@ namespace RecyclePlus
 
             _gui = InventoryGui.instance;
 
-            trash = Instantiate(playerInventory.Find("Armor"), playerInventory);
+            //trash = Instantiate(playerInventory.Find("Armor"), playerInventory);
+            //trashButton = trash.gameObject.AddComponent<TrashButton>();
+            Transform armor = playerInventory.Find("Armor");
+            trash = Object.Instantiate(armor, playerInventory);
+            // fix rendering order by going to the right place in the hierachy
+           // trash.SetSiblingIndex(armor.GetSiblingIndex() + 1);
+            trash.SetSiblingIndex(1000);
             trashButton = trash.gameObject.AddComponent<TrashButton>();
 
             var guiMixer = AudioMan.instance.m_masterMixer.FindMatchingGroups("GUI")[0];
@@ -287,8 +296,8 @@ namespace RecyclePlus
                 //set the color to Valheim Yellow
                 //TrashColor = new Color(1f, 0.8482759f, 0);
 
-                SetText(TrashLabel.Value);
-                SetColor(TrashColor.Value);
+                //SetText(TrashLabel.Value);
+                //SetColor(TrashColor.Value);
 
                 Transform tArmor = transform.Find("armor_icon");
                 if (!tArmor)
@@ -315,14 +324,14 @@ namespace RecyclePlus
                 image.color = new Color(0, 0, 0, 0);
 
                 // Add border background
-                Transform frames = playerInventory.Find("selected_frame");
+                Transform frames = playerInventory.Find("selected");
                 GameObject newFrame = Instantiate(frames.GetChild(0).gameObject, transform);
                 newFrame.GetComponent<Image>().sprite = bgSprite;
                 newFrame.transform.SetAsFirstSibling();
                 newFrame.GetComponent<RectTransform>().sizeDelta = new Vector2(-8, 22);
                 newFrame.GetComponent<RectTransform>().anchoredPosition = new Vector2(6, 7.5f);
 
-                // Add inventory screen tab
+                // // Add inventory screen tab
                 UIGroupHandler handler = gameObject.AddComponent<UIGroupHandler>();
                 handler.m_groupPriority = 1;
                 handler.m_enableWhenActiveAndGamepad = newFrame;
