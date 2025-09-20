@@ -131,6 +131,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="README.md" />
+    <Content Include="Thunderstore\icon.png" />
     <EmbeddedResource Include="Resources\border.png" />
     <EmbeddedResource Include="Resources\trash.png" />
     <EmbeddedResource Include="Resources\trash1.png" />
@@ -143,12 +144,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Thunderstore\manifest.json" />
+    <None Include="Thunderstore\README.md" />
     <None Include="UnityWav\LICENSE" />
     <None Include="UnityWav\README.md" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Thunderstore\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\ILRepack.Lib.MSBuild.Task.2.0.18.2\build\ILRepack.Lib.MSBuild.Task.targets" Condition="Exists('packages\ILRepack.Lib.MSBuild.Task.2.0.18.2\build\ILRepack.Lib.MSBuild.Task.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

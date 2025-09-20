@@ -8,7 +8,7 @@ by TastyChickenLegs
 - Allows a configurable key to delete/recycle - Default is Delete Key
 - Works with modded and custom items
 
-[Chat with me on Discord](https://discord.com/users/TastyChickenLegs#4818)
+[Chat with me on Discord](https://discord.gg/z5NrSZqP)
 
 ![Screenshot](https://i.ibb.co/pXzrVdR/trash1.png)
 ```
@@ -45,6 +45,7 @@ Versions
 1.2.8
 
 - Updated for Ashlands
+
 
 
 1.2.7
