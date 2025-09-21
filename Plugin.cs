@@ -113,7 +113,15 @@ namespace RecyclePlus
            
             returnResources = config("General", "ReturnResources", 1f, new ConfigDescription
                 ("Fraction of resources to return (0.0 - 1.0) 1.0 is 100%", new AcceptableValueRange<float>(0.0f, 1.0f)));
-            showcan = config("General", "ShowTrashCan", true, new ConfigDescription("Show Trash Can on the inventory menu Requires Restart"));
+            showcan = config("General", "ShowTrashCan", true, new ConfigDescription("Show Trash Can on the inventory menu"));
+            showcan.SettingChanged += (sender, args) =>
+            {
+                Transform playerInventory = InventoryGui.instance.m_player.transform;
+                trash = playerInventory.Find("Trash");
+
+                if (trash != null)
+                    trash.gameObject.SetActive(showcan.Value);
+            };
             modKey = config("General", "DiscardHotkey", KeyCode.Delete,
                 new ConfigDescription("The modifier key to recycle or delete on click"));
             TrashColor = config("General", "TrashColor", new Color(1f, 0.8482759f, 0), "Color for the trash label");
