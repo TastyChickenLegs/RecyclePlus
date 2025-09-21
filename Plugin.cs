@@ -324,7 +324,7 @@ namespace RecyclePlus
                 image.color = new Color(0, 0, 0, 0);
 
                 // Add border background
-                Transform frames = playerInventory.Find("selected");
+                Transform frames = playerInventory.Find("selected_frame");
                 GameObject newFrame = Instantiate(frames.GetChild(0).gameObject, transform);
                 newFrame.GetComponent<Image>().sprite = bgSprite;
                 newFrame.transform.SetAsFirstSibling();
@@ -357,7 +357,7 @@ namespace RecyclePlus
 
             public void SetText(string text)
             {
-                Transform tText = transform.Find("ac_text");
+                Transform tText = transform.Find("");
                 if (!tText)
                 {
                     LogErr("ac_text not found!");
