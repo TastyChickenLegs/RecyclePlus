@@ -33,6 +33,11 @@ Options
 
 Versions
 
+1.3.1
+
+- Fixed trash can border background frame upon creating it for first time
+- "show Trash Can" config option doesn't require restarting 
+
 1.3.0
 
 - updated to newest patch and fixed dragging items to Trashcan
