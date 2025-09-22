@@ -13,14 +13,12 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using System.Collections;
 using TMPro;
-using System.Runtime.Remoting.Messaging;
 
 namespace RecyclePlus
 {
     [BepInPlugin(ModGUID, ModName, ModVersion)]
     public class RecyclePlusMain : BaseUnityPlugin
     {
-        private static readonly bool isDebug = false;
         internal const string ModName = "RecyclePlus";
         internal const string ModVersion = "1.3.0";
         internal const string Author = "TastyChickenLegs";
@@ -35,6 +33,7 @@ namespace RecyclePlus
         /// <summary>
         /// Custom Entered Variables
         /// </summary>
+        public static ConfigEntry<bool> isDebug;
         public static ConfigEntry<KeyCode> modKey;
         public static ConfigEntry<bool> modEnabled;
         public static ConfigEntry<float> returnResources;
@@ -68,7 +67,7 @@ namespace RecyclePlus
 
         public static void Dbgl(string str = "", bool pref = true)
         {
-            if (isDebug)
+            if (isDebug.Value)
                 Debug.Log((pref ? typeof(RecyclePlusMain).Namespace + " " : "") + str);
         }
 
@@ -109,6 +108,7 @@ namespace RecyclePlus
                 "If on, the configuration is locked and can be changed by server admins only.");
             _ = ConfigSync.AddLockingConfigEntry(_serverConfigLocked);
             /// Custom Configs ///
+            isDebug = config("General", "DebugMode", false, "DebugMode for extra logging");
             TrashLabel = config("General", "TrashLabel", "Trash", "Label for the trash button");
            
             returnResources = config("General", "ReturnResources", 1f, new ConfigDescription
@@ -297,15 +297,14 @@ namespace RecyclePlus
                 if (InventoryGui.instance == null)
                     return;
 
-                var playerInventory = InventoryGui.instance.m_player.transform;
                 RectTransform rect = GetComponent<RectTransform>();
                 rect.anchoredPosition -= new Vector2(0, 78);
 
                 //set the color to Valheim Yellow
                 //TrashColor = new Color(1f, 0.8482759f, 0);
 
-                //SetText(TrashLabel.Value);
-                //SetColor(TrashColor.Value);
+                SetText(TrashLabel.Value);
+                SetColor(TrashColor.Value);
 
                 Transform tArmor = transform.Find("armor_icon");
                 if (!tArmor)
@@ -332,7 +331,8 @@ namespace RecyclePlus
                 image.color = new Color(0, 0, 0, 0);
 
                 // Add border background
-                Transform frames = playerInventory.Find("selected_frame");
+                var playerInventory = InventoryGui.instance.m_player.transform;
+                Transform frames = playerInventory.Find("selected"); // FIXME should be "selected_frame" but breaks the dragging
                 GameObject newFrame = Instantiate(frames.GetChild(0).gameObject, transform);
                 newFrame.GetComponent<Image>().sprite = bgSprite;
                 newFrame.transform.SetAsFirstSibling();
@@ -365,7 +365,7 @@ namespace RecyclePlus
 
             public void SetText(string text)
             {
-                Transform tText = transform.Find("");
+                Transform tText = transform.Find("ac_text");
                 if (!tText)
                 {
                     LogErr("ac_text not found!");
